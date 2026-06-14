@@ -1,0 +1,78 @@
+import { createToolConfig } from "@askjeeves/conversion-core";
+
+export const toolConfig = createToolConfig({
+	id: "pdf-tools",
+	title: "PDF Converter",
+	tagline:
+		"Convert and edit PDF files in your browser. Nothing leaves your device.",
+	sourceFormat: "pdf",
+	allowsMultiple: true,
+	minFiles: 1,
+	conversions: [
+		{
+			id: "pdf-extract",
+			source: "pdf",
+			target: "pdf",
+			label: "Extract page range → PDF",
+			enabled: true,
+			options: "pdf",
+		},
+		{
+			id: "pdf-split-zip",
+			source: "pdf",
+			target: "pdf",
+			label: "Split all pages → ZIP of PDFs",
+			enabled: true,
+			options: "none",
+		},
+		{
+			id: "pdf-png",
+			source: "pdf",
+			target: "png",
+			label: "Pages → PNG (ZIP if multiple)",
+			enabled: true,
+			options: "pdf",
+		},
+		{
+			id: "pdf-to-jpeg",
+			source: "pdf",
+			target: "jpeg",
+			label: "PDF → JPEG(s)",
+			enabled: true,
+			options: "pdf",
+		},
+		{
+			id: "pdf-to-webp",
+			source: "pdf",
+			target: "webp",
+			label: "PDF → WebP(s)",
+			enabled: true,
+			options: "pdf",
+		},
+		{
+			id: "pdf-remove-pages",
+			source: "pdf",
+			target: "pdf",
+			label: "Remove pages from PDF",
+			enabled: true,
+			options: "pdf",
+		},
+		{
+			id: "pdf-compress",
+			source: "pdf",
+			target: "pdf",
+			label: "Compress PDF",
+			enabled: true,
+			options: "pdf-compress",
+		},
+		{
+			id: "pdf-merge",
+			source: "pdf",
+			target: "pdf",
+			label: "Merge PDF",
+			enabled: true,
+			options: "none",
+			allowsMultipleInputs: true,
+		},
+	],
+});

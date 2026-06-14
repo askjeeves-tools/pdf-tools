@@ -1,0 +1,21 @@
+{
+	"name": "@askjeeves/processors-pdf",
+	"version": "0.1.0",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"test": "vitest run",
+		"lint": "biome check ."
+	},
+	"dependencies": {
+		"@askjeeves/conversion-core": "file:../conversion-core",
+		"jszip": "^3.10.1",
+		"pdf-lib": "^1.17.1",
+		"pdfjs-dist": "^5.4.296"
+	},
+	"devDependencies": {
+		"vitest": "^3.2.6"
+	}
+}

@@ -1,0 +1,28 @@
+:root {
+	--primary: #8c5cf5;
+	--primary-rgb: 140, 92, 245;
+	--primary-light: #a277ff;
+}
+
+a {
+	color: var(--primary-light);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+main {
+	width: min(100%, 820px);
+	margin: 0 auto;
+	padding: 2rem clamp(1rem, 4vw, 2.5rem);
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	min-height: 100dvh;
+}
+
+.hidden {
+	display: none !important;
+}

@@ -1,0 +1,30 @@
+.primary-btn {
+	background: var(--primary);
+	color: #fff;
+	padding: 0.5rem 1.25rem;
+	cursor: pointer;
+	border: none;
+	font: inherit;
+}
+
+.primary-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.primary-btn:not(:disabled):hover {
+	filter: brightness(1.1);
+}
+
+.secondary-btn {
+	background: transparent;
+	color: inherit;
+	padding: 0.5rem 1.25rem;
+	cursor: pointer;
+	border: 1px solid #353535;
+	font: inherit;
+}
+
+.secondary-btn:hover {
+	border-color: var(--primary);
+}

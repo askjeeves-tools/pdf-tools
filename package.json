@@ -1,0 +1,29 @@
+{
+	"name": "pdf-tools",
+	"version": "0.1.9",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"deploy": "pnpm run build && wrangler pages deploy dist",
+		"pretest:e2e": "pnpm run build",
+		"test:e2e": "playwright test",
+		"lint": "biome check .",
+		"preinstall": "npx only-allow pnpm"
+	},
+	"dependencies": {
+		"@askjeeves/astro-integration": "file:./vendor/@askjeeves/astro-integration",
+		"@askjeeves/conversion-core": "file:./vendor/@askjeeves/conversion-core",
+		"@askjeeves/processors-pdf": "file:./vendor/@askjeeves/processors-pdf",
+		"@askjeeves/ui": "file:./vendor/@askjeeves/ui",
+		"astro": "6.4.6"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.60.0",
+		"typescript": "^5.9.2",
+		"wrangler": "^4.100.0"
+	},
+	"packageManager": "pnpm@10.27.0"
+}
