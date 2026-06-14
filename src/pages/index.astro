@@ -1,0 +1,22 @@
+---
+import { maxFileBytes } from "ask-jeeves:globals";
+import ConverterShell from "@askjeeves/ui/components/ConverterShell.astro";
+import ToolLayout from "@askjeeves/ui/layouts/ToolLayout.astro";
+import { toolConfig } from "../../tool.config";
+---
+
+<ToolLayout title={toolConfig.title} description={toolConfig.tagline}>
+	<ConverterShell config={toolConfig} maxFileBytes={maxFileBytes} />
+</ToolLayout>
+
+<script>
+	import { initToolController } from "@askjeeves/ui/scripts/tool-controller";
+	import { processors } from "../scripts/processors";
+	import { toolConfig } from "../../tool.config";
+	import { maxFileBytes } from "ask-jeeves:globals";
+
+	const root = document.getElementById("converter-root");
+	if (root) {
+		initToolController(root, toolConfig, processors, maxFileBytes);
+	}
+</script>

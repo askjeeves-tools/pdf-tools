@@ -1,0 +1,81 @@
+---
+import mascot from "../assets/ask-jeeves-mascot.png";
+import mascotMeta from "../assets/mascot-meta.json";
+
+interface Props {
+	variant?: "hero" | "navbar";
+}
+
+const { variant = "hero" } = Astro.props;
+const { width, height } = mascotMeta;
+const filterId = `mascot-glow-filter-${variant}`;
+const showGlow = variant === "hero";
+---
+
+<svg
+	class:list={["mascot-graphic", variant === "navbar" && "mascot-graphic--navbar", variant === "hero" && "mascot-graphic--hero"]}
+	viewBox={`0 0 ${width} ${height}`}
+	role="img"
+	aria-label="Ask Jeeves mascot"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+	{
+		showGlow && (
+			<defs>
+				<filter
+					id={filterId}
+					x="-35%"
+					y="-35%"
+					width="170%"
+					height="170%"
+					color-interpolation-filters="sRGB"
+				>
+					<feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur" />
+					<feFlood flood-color="#ffffff" flood-opacity="0.4" result="flood" />
+					<feComposite in="flood" in2="blur" operator="in" result="glow" />
+					<feMerge>
+						<feMergeNode in="glow" />
+						<feMergeNode in="SourceGraphic" />
+					</feMerge>
+				</filter>
+			</defs>
+		)
+	}
+	<g id="mascot-root" filter={showGlow ? `url(#${filterId})` : undefined}>
+		<g id="mascot-figure">
+			<image
+				id="mascot-raster"
+				href={mascot.src}
+				x="0"
+				y="0"
+				width={width}
+				height={height}
+				preserveAspectRatio="xMidYMid meet"
+			/>
+		</g>
+	</g>
+</svg>
+
+<style>
+	.mascot-graphic {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-width: 100%;
+		overflow: visible;
+	}
+
+	.mascot-graphic--navbar {
+		height: 40px;
+		width: auto;
+		max-width: 40px;
+		flex-shrink: 0;
+	}
+
+	.mascot-graphic--hero {
+		height: 200px;
+		width: auto;
+		max-width: 100%;
+	}
+</style>

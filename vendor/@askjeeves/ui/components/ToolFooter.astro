@@ -1,0 +1,17 @@
+---
+import { version } from "ask-jeeves:globals";
+
+interface Props {
+	projectName: string;
+}
+
+const { projectName } = Astro.props;
+---
+
+<footer class="tool-footer">
+	<a href="https://askjeeves.cc">askjeeves.cc</a>
+	<span class="tool-footer-sep" aria-hidden="true">|</span>
+	<span>{projectName}</span>
+	<span class="tool-footer-sep" aria-hidden="true">|</span>
+	<span>v{version}</span>
+</footer>

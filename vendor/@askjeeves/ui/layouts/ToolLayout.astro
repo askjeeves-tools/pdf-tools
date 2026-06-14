@@ -1,0 +1,25 @@
+---
+import "../styles/index.css";
+import ToolFooter from "../components/ToolFooter.astro";
+import ToolHead from "../components/ToolHead.astro";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<ToolHead title={title} description={description} />
+	</head>
+	<body>
+		<main>
+			<slot />
+			<ToolFooter projectName={title} />
+		</main>
+	</body>
+</html>

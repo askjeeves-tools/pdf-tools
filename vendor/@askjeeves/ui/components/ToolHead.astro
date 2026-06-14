@@ -1,0 +1,19 @@
+---
+import { name, tagline, themeColor } from "ask-jeeves:globals";
+import favicon from "../assets/favicon-32x32.png";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = tagline } = Astro.props;
+const pageTitle = `${title} | ${name}`;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="theme-color" content={themeColor} />
+<link rel="icon" type="image/png" sizes="32x32" href={favicon.src} />
+<title>{pageTitle}</title>
+<meta name="description" content={description} />

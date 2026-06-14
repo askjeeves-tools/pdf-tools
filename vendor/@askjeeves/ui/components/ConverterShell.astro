@@ -1,0 +1,131 @@
+---
+import type { ToolConfig } from "@askjeeves/conversion-core";
+import MascotGraphic from "./MascotGraphic.astro";
+
+interface Props {
+	config: ToolConfig;
+	maxFileBytes: number;
+}
+
+const { config, maxFileBytes } = Astro.props;
+
+const formatExt = `.${config.sourceFormat.toUpperCase()}`;
+const outputOptions = config.conversions
+	.filter((c) => c.enabled)
+	.map((c) => c.label.split("→")[1]?.trim() ?? c.target.toUpperCase())
+	.join(", ");
+---
+
+<div id="converter-root" class="tool-hero-page" data-max-bytes={maxFileBytes}>
+	<div class="tool-hero-stage">
+		<div class="tool-hero-body">
+			<div class="tool-hero-mascot">
+				<MascotGraphic variant="hero" />
+			</div>
+			<div class="tool-hero-panel">
+				<h1 class="tool-hero-title">{config.title}</h1>
+				<p class="tool-tagline">{config.tagline}</p>
+
+				<div
+					id="tool-drop-zone"
+					class="tool-drop-zone"
+					tabindex="0"
+					role="button"
+					aria-label={`Drop ${config.sourceFormat.toUpperCase()} file or click to browse`}
+				>
+					<input
+						id="tool-file-input"
+						type="file"
+						hidden
+						multiple={config.allowsMultiple}
+						accept={config.accept}
+					/>
+					<p class="tool-drop-label">
+						Drop {config.sourceFormat.toUpperCase()} file{config.allowsMultiple ? "s" : ""} or click to browse
+					</p>
+				</div>
+
+				<p class="tool-upload-hint">
+					Upload a {formatExt} file to convert to - {outputOptions}
+				</p>
+
+				<p id="tool-file-name" class="tool-file-name"></p>
+
+				<div id="tool-convert-panel" class="tool-convert-panel hidden">
+					<h2 class="tool-methods-heading">Output format</h2>
+					<div id="tool-method-list" class="tool-method-list" role="radiogroup"></div>
+
+					<div id="image-options" class="tool-option-panel hidden">
+						<label class="field-label" for="quality-range">JPEG / WebP quality</label>
+						<input id="quality-range" type="range" min="0.5" max="1" step="0.05" value="0.92" />
+						<label class="field-label" for="max-width">Max width (px, optional)</label>
+						<input id="max-width" type="number" min="1" placeholder="Original size" class="form-input" />
+						<p id="crop-hint" class="option-hint hidden">
+							Drag the crop box on the preview image. Use corner handles to resize.
+						</p>
+					</div>
+					<div id="pdf-options" class="tool-option-panel hidden">
+						<label class="field-label" for="page-from">Page from</label>
+						<input id="page-from" type="number" min="1" value="1" class="form-input" />
+						<label class="field-label" for="page-to">Page to</label>
+						<input id="page-to" type="number" min="1" placeholder="Last page" class="form-input" />
+						<p id="pdf-remove-hint" class="option-hint hidden">
+							Pages in this range will be removed. All other pages are kept.
+						</p>
+						<p id="pdf-split-hint" class="option-hint hidden">
+							Splitting many pages may take a moment for large PDFs (max 50 pages per job).
+						</p>
+					</div>
+					<div id="pdf-compress-options" class="tool-option-panel hidden">
+						<fieldset class="compress-mode-fieldset">
+							<legend class="field-label">Compression mode</legend>
+							<label class="radio-label">
+								<input type="radio" name="pdf-compress-mode" value="light" checked />
+								Light optimize (keeps text selectable; may not shrink much)
+							</label>
+							<label class="radio-label">
+								<input type="radio" name="pdf-compress-mode" value="rasterize" />
+								Rasterize pages (smaller file; text no longer selectable)
+							</label>
+						</fieldset>
+					</div>
+					<div id="xlsx-options" class="tool-option-panel hidden">
+						<label class="field-label" for="sheet-name">Sheet name (optional)</label>
+						<input
+							id="sheet-name"
+							type="text"
+							placeholder="First sheet if empty"
+							class="form-input"
+						/>
+					</div>
+					<p id="docx-pdf-hint" class="option-hint hidden">
+						Basic conversion: output is a PDF snapshot of the document content, not a
+						pixel-perfect Word layout.
+					</p>
+
+					<div class="tool-actions">
+						<button id="tool-convert-btn" type="button" class="primary-btn" disabled>
+							Convert
+						</button>
+						<button id="tool-cancel-btn" type="button" class="secondary-btn hidden">
+							Cancel
+						</button>
+					</div>
+				</div>
+
+				<div class="tool-progress-wrap">
+					<progress id="tool-progress" class="tool-progress hidden" max="100"></progress>
+					<p id="tool-progress-label" class="tool-progress-label"></p>
+				</div>
+
+				<p id="tool-status" class="tool-status" aria-live="polite"></p>
+
+				<a id="tool-download" class="download-link hidden" download>Download result</a>
+
+				<p class="privacy-note">
+					Files are processed locally in your browser. Nothing is uploaded to a server.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
