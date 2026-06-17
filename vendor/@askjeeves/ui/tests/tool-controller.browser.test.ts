@@ -164,7 +164,7 @@ describe("initToolController", () => {
 		).toBe(true);
 	});
 
-	it("surfaces unhandled rejection in status", async () => {
+	it("does not surface unrelated unhandled rejection when idle", async () => {
 		const root = buildShell();
 		initToolController(root, CSV_CONFIG, {}, 52_428_800);
 
@@ -173,6 +173,59 @@ describe("initToolController", () => {
 			value: new Error("unexpected"),
 		});
 		window.dispatchEvent(event);
+
+		await vi.waitFor(() => {
+			expect(root.querySelector("#tool-status")!.textContent).toBe("");
+		});
+	});
+
+	it("surfaces chunk load failure when idle", async () => {
+		const root = buildShell();
+		initToolController(root, CSV_CONFIG, {}, 52_428_800);
+
+		const event = new Event("unhandledrejection");
+		Object.defineProperty(event, "reason", {
+			value: new Error("Failed to fetch dynamically imported module"),
+		});
+		window.dispatchEvent(event);
+
+		await vi.waitFor(() => {
+			expect(
+				root.querySelector("#tool-status")!.classList.contains("error"),
+			).toBe(true);
+		});
+		expect(root.querySelector("#tool-status")!.textContent).toContain(
+			"Refresh the page",
+		);
+	});
+
+	it("surfaces unhandled rejection during conversion", async () => {
+		const root = buildShell();
+		const processors = {
+			"csv-json": vi.fn(async () => {
+				const event = new Event("unhandledrejection");
+				Object.defineProperty(event, "reason", {
+					value: new Error("unexpected"),
+				});
+				window.dispatchEvent(event);
+				throw new Error("processor failed");
+			}),
+		};
+		initToolController(root, CSV_CONFIG, processors, 52_428_800);
+
+		const input = root.querySelector<HTMLInputElement>("#tool-file-input")!;
+		const dt = new DataTransfer();
+		dt.items.add(csvFile());
+		input.files = dt.files;
+		input.dispatchEvent(new Event("change"));
+
+		await vi.waitFor(() => {
+			expect(
+				root.querySelector("#tool-convert-btn")!.hasAttribute("disabled"),
+			).toBe(false);
+		});
+
+		root.querySelector<HTMLButtonElement>("#tool-convert-btn")!.click();
 
 		await vi.waitFor(() => {
 			expect(

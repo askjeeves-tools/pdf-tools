@@ -5,11 +5,15 @@
 	"private": true,
 	"scripts": {
 		"dev": "astro dev",
+		"generate:llms-txt": "tsx scripts/generate-llms-txt.ts",
+		"prebuild": "pnpm run generate:seo-images && pnpm run generate:llms-txt",
 		"build": "astro build",
 		"preview": "astro preview",
 		"deploy": "pnpm run build && wrangler pages deploy dist",
 		"pretest:e2e": "pnpm run build",
 		"test:e2e": "playwright test",
+		"test": "vitest run",
+		"generate:seo-images": "node scripts/generate-seo-images.mjs",
 		"lint": "biome check .",
 		"preinstall": "npx only-allow pnpm"
 	},
@@ -18,12 +22,22 @@
 		"@askjeeves/conversion-core": "file:./vendor/@askjeeves/conversion-core",
 		"@askjeeves/processors-pdf": "file:./vendor/@askjeeves/processors-pdf",
 		"@askjeeves/ui": "file:./vendor/@askjeeves/ui",
+		"@astrojs/sitemap": "^3.7.0",
 		"astro": "6.4.6"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.60.0",
+		"happy-dom": "^20.10.3",
+		"sharp": "^0.34.5",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.2",
+		"vitest": "^3.2.6",
 		"wrangler": "^4.100.0"
 	},
-	"packageManager": "pnpm@10.27.0"
+	"packageManager": "pnpm@10.27.0",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"sharp"
+		]
+	}
 }

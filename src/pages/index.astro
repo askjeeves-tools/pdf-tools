@@ -2,21 +2,78 @@
 import { maxFileBytes } from "ask-jeeves:globals";
 import ConverterShell from "@askjeeves/ui/components/ConverterShell.astro";
 import ToolLayout from "@askjeeves/ui/layouts/ToolLayout.astro";
+import SeoContent from "../components/SeoContent.astro";
+import { buildPdfToolsExtraGraph } from "../seo-structured-data";
+import {
+	SEO_BRAND_TITLE,
+	SEO_DESCRIPTION,
+	SEO_DOCUMENT_TITLE,
+	SEO_OG_IMAGE_ALT,
+	SEO_OG_IMAGE_HEIGHT,
+	SEO_OG_IMAGE_WIDTH,
+	SEO_OG_LOCALE,
+} from "../seo";
 import { toolConfig } from "../../tool.config";
+
+const featureList = toolConfig.conversions
+	.filter((conversion) => conversion.enabled)
+	.map((conversion) => conversion.label);
+
+if (!Astro.site) {
+	throw new Error("[index] Astro.site must be set in astro.config.ts for SEO.");
+}
+const siteOrigin = Astro.site.origin;
+const structuredDataGraph = buildPdfToolsExtraGraph(siteOrigin, featureList);
 ---
 
-<ToolLayout title={toolConfig.title} description={toolConfig.tagline}>
+<ToolLayout
+	title={SEO_BRAND_TITLE}
+	description={SEO_DESCRIPTION}
+	featureList={featureList}
+	documentTitle={SEO_DOCUMENT_TITLE}
+	ogImageAlt={SEO_OG_IMAGE_ALT}
+	ogImageWidth={SEO_OG_IMAGE_WIDTH}
+	ogImageHeight={SEO_OG_IMAGE_HEIGHT}
+	ogLocale={SEO_OG_LOCALE}
+	structuredDataGraph={structuredDataGraph}
+>
 	<ConverterShell config={toolConfig} maxFileBytes={maxFileBytes} />
+	<SeoContent />
 </ToolLayout>
 
 <script>
+	import {
+		getErrorMessage,
+		setStatus,
+	} from "@askjeeves/conversion-core";
 	import { initToolController } from "@askjeeves/ui/scripts/tool-controller";
 	import { processors } from "../scripts/processors";
 	import { toolConfig } from "../../tool.config";
 	import { maxFileBytes } from "ask-jeeves:globals";
 
+	const BOOTSTRAP_FAIL =
+		"Could not start the converter. Refresh the page and try again.";
+
 	const root = document.getElementById("converter-root");
-	if (root) {
-		initToolController(root, toolConfig, processors, maxFileBytes);
+	const statusEl = document.getElementById("tool-status");
+
+	if (!root) {
+		if (statusEl) {
+			setStatus(statusEl, BOOTSTRAP_FAIL, true);
+		} else {
+			console.error("[pdf-tools] #converter-root missing");
+		}
+	} else {
+		try {
+			initToolController(root, toolConfig, processors, maxFileBytes);
+		} catch (err) {
+			const msg = getErrorMessage(err, BOOTSTRAP_FAIL);
+			if (statusEl) {
+				setStatus(statusEl, msg, true);
+			}
+			if (import.meta.env?.DEV) {
+				console.error("[pdf-tools] init failed", err);
+			}
+		}
 	}
 </script>

@@ -5,6 +5,7 @@ import { viteVirtualModulePluginBuilder } from "./utils/virtual-module-plugin-bu
 const openGraphOptionsSchema = z.object({
 	title: z.string(),
 	description: z.string().optional(),
+	image: z.string().url().optional(),
 });
 
 export const optionsSchema = z.object({
@@ -12,6 +13,7 @@ export const optionsSchema = z.object({
 	tagline: z.string().optional(),
 	themeColor: z.string().optional(),
 	twitterHandle: z.string().optional(),
+	organizationUrl: z.string().url().default("https://askjeeves.cc"),
 	maxFileBytes: z.number().optional(),
 	version: z.string().default("0.0.0"),
 	openGraph: z.object({
@@ -38,6 +40,7 @@ export default function askJeevesIntegration(
     export const tagline = ${JSON.stringify(validatedOptions.tagline ?? "")};
     export const themeColor = ${JSON.stringify(validatedOptions.themeColor ?? "#8c5cf5")};
     export const twitterHandle = ${JSON.stringify(validatedOptions.twitterHandle ?? "")};
+    export const organizationUrl = ${JSON.stringify(validatedOptions.organizationUrl)};
     export const maxFileBytes = ${validatedOptions.maxFileBytes ?? 52_428_800};
     export const version = ${JSON.stringify(validatedOptions.version)};
     export const openGraph = {

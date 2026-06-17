@@ -9,11 +9,8 @@ interface Props {
 
 const { config, maxFileBytes } = Astro.props;
 
-const formatExt = `.${config.sourceFormat.toUpperCase()}`;
-const outputOptions = config.conversions
-	.filter((c) => c.enabled)
-	.map((c) => c.label.split("→")[1]?.trim() ?? c.target.toUpperCase())
-	.join(", ");
+const enabledConversions = config.conversions.filter((c) => c.enabled);
+const conversionsHeading = `Supported ${config.sourceFormat.toUpperCase()} conversions`;
 ---
 
 <div id="converter-root" class="tool-hero-page" data-max-bytes={maxFileBytes}>
@@ -45,9 +42,19 @@ const outputOptions = config.conversions
 					</p>
 				</div>
 
-				<p class="tool-upload-hint">
-					Upload a {formatExt} file to convert to - {outputOptions}
-				</p>
+				<details
+					class="supported-conversions-expander"
+					aria-label={conversionsHeading}
+				>
+					<summary>{conversionsHeading}</summary>
+					<ul>
+						{
+							enabledConversions.map((conversion) => (
+								<li>{conversion.label}</li>
+							))
+						}
+					</ul>
+				</details>
 
 				<p id="tool-file-name" class="tool-file-name"></p>
 

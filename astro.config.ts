@@ -1,24 +1,31 @@
 import askJeeves from "@askjeeves/astro-integration";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import pkg from "./package.json" with { type: "json" };
+import {
+	SEO_DESCRIPTION,
+	SEO_OG_TITLE,
+	SEO_SITE_ORIGIN,
+} from "./src/seo";
 
 export default defineConfig({
 	output: "static",
-	site: "https://pdf.askjeeves.cc",
+	site: SEO_SITE_ORIGIN,
 	integrations: [
 		askJeeves({
 			name: "Ask Jeeves",
-			tagline:
-				"Convert and edit PDF files in your browser. Nothing leaves your device.",
+			tagline: SEO_DESCRIPTION,
 			version: pkg.version,
+			organizationUrl: "https://askjeeves.cc",
 			openGraph: {
 				home: {
-					title: "PDF Converter — Ask Jeeves",
-					description:
-						"Free PDF merge, split, compress, and image export in your browser.",
+					title: SEO_OG_TITLE,
+					description: SEO_DESCRIPTION,
+					image: `${SEO_SITE_ORIGIN}/og.png`,
 				},
 			},
 		}),
+		sitemap({ lastmod: new Date() }),
 	],
 	vite: {
 		resolve: { preserveSymlinks: true },

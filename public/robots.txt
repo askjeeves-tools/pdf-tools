@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pdf.askjeeves.cc/sitemap-index.xml

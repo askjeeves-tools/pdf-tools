@@ -1,0 +1,37 @@
+# Free Secure PDF Converter — Ask Jeeves
+
+> Free, secure PDF converter. Merge, split, compress, and export PDF pages to PNG, JPEG, or WebP in your browser. Extract or remove pages—files never leave your device.
+
+## Tool
+
+- [Free Secure PDF Converter](https://pdf.askjeeves.cc/): Merge, split, compress PDFs; export pages to PNG, JPEG, or WebP; extract or remove pages
+
+## Supported conversions
+
+- Extract page range → PDF
+- Split all pages → ZIP of PDFs
+- Pages → PNG (ZIP if multiple)
+- PDF → JPEG(s)
+- PDF → WebP(s)
+- Remove pages from PDF
+- Compress PDF
+- Merge PDF
+
+## FAQ
+
+- Is this PDF converter free? Yes. Every conversion is free with no account, watermark, or usage limit.
+- Is this PDF converter secure? Yes. Files are processed locally in your browser. Nothing is uploaded to a server, so your documents stay on your device.
+- What can I do with my PDF files? You can merge multiple PDFs, split pages into separate files, compress PDFs, export pages to PNG, JPEG, or WebP, extract a page range, or remove unwanted pages.
+- Can I merge multiple PDF files? Yes. Choose Merge PDF, upload two or more PDF files, and download a single combined document.
+- Does the converter work on mobile? Yes. It runs in modern mobile browsers that support HTML5 and JavaScript. Very large files may be slower on mobile devices.
+- What is the maximum file size? Each file can be up to about 50 MB. If a file is too large, you will see a clear error message asking you to use a smaller file.
+- Is there a page limit? Each PDF job can process up to 50 pages. If your document has more pages, split it into smaller files first.
+- Why did my conversion fail? Common causes are a non-PDF file, corrupted PDF data, exceeding the size or page limit, or choosing merge with only one file. Check the message below the converter for specific guidance, then try again or refresh the page.
+
+## Extended context
+
+- [Full site context](https://pdf.askjeeves.cc/llms-full.txt): how-it-works, security, and per-conversion details
+
+## More tools
+
+- [Ask Jeeves](https://askjeeves.cc): Free file conversion tools (PDF, images, CSV/JSON/Excel, Word)

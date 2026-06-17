@@ -1,0 +1,192 @@
+---
+import { FAQ_ENTRIES } from "../faq";
+import { RELATED_TOOLS } from "../related-tools";
+import { SEO_DESCRIPTION } from "../seo";
+import {
+	CONVERSION_DESCRIPTIONS,
+	HOW_IT_WORKS_STEPS,
+	SECURITY_SECTION_COPY,
+	getEnabledConversions,
+} from "../seo-content";
+
+const enabledConversions = getEnabledConversions();
+---
+
+<section class="seo-content" aria-label="About this PDF converter">
+	<section class="seo-intro">
+		<h2>Free, secure PDF converter</h2>
+		<p>
+			{SEO_DESCRIPTION} This free, secure PDF converter runs entirely in your
+			browser—no account required and no watermarks on your output.
+		</p>
+		<p>
+			Merge multiple PDFs, split pages into separate files, compress documents,
+			export pages to PNG, JPEG, or WebP, extract a page range, or remove
+			unwanted pages. Every operation stays on your device.
+		</p>
+	</section>
+
+	<details class="seo-expander" aria-label="How it works">
+		<summary>How it works</summary>
+		<ol>
+			{HOW_IT_WORKS_STEPS.map((step) => <li>{step}</li>)}
+		</ol>
+	</details>
+
+	<details class="seo-expander" aria-label="Supported PDF conversions">
+		<summary>Supported PDF conversions</summary>
+		<ul class="seo-conversion-list">
+			{
+				enabledConversions.map((conversion) => (
+					<li>
+						<strong>{conversion.label}</strong>
+						— {CONVERSION_DESCRIPTIONS[conversion.id] ?? conversion.label}
+					</li>
+				))
+			}
+		</ul>
+	</details>
+
+	<details class="seo-expander" aria-label="Secure and private">
+		<summary>Secure and private</summary>
+		<p>{SECURITY_SECTION_COPY}</p>
+	</details>
+
+	<details class="seo-expander" aria-label="Frequently asked questions">
+		<summary>Frequently asked questions</summary>
+		<div class="seo-faq">
+			{
+				FAQ_ENTRIES.map((entry) => (
+					<div class="seo-faq-item">
+						<h3>{entry.question}</h3>
+						<p>{entry.answer}</p>
+					</div>
+				))
+			}
+		</div>
+	</details>
+
+	<details
+		class="seo-expander"
+		aria-label="What other AskJeeves tools are available"
+	>
+		<summary>What other AskJeeves tools are available</summary>
+		<ul class="seo-tool-list">
+			{
+				RELATED_TOOLS.map((tool) => (
+					<li>
+						{tool.name} — <a href={tool.href}>{tool.label}</a>
+					</li>
+				))
+			}
+		</ul>
+	</details>
+</section>
+
+<style>
+	.seo-content {
+		max-width: 42rem;
+		margin: 0 auto;
+		padding: 2rem 1.25rem 3rem;
+		line-height: 1.6;
+	}
+
+	.seo-intro {
+		margin-bottom: 1.5rem;
+	}
+
+	.seo-intro h2 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0 0 0.75rem;
+		color: rgb(255 255 255 / 0.78);
+	}
+
+	.seo-intro p,
+	.seo-expander p,
+	.seo-expander ol,
+	.seo-expander ul,
+	.seo-expander li,
+	.seo-faq-item p {
+		margin: 0 0 0.75rem;
+		color: rgb(255 255 255 / 0.62);
+	}
+
+	.seo-expander {
+		margin-bottom: 0.75rem;
+		font-size: 0.92rem;
+		line-height: 1.5;
+		color: rgb(255 255 255 / 0.62);
+	}
+
+	.seo-expander summary {
+		cursor: pointer;
+		font-weight: 600;
+		color: rgb(255 255 255 / 0.78);
+		list-style: none;
+	}
+
+	.seo-expander summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.seo-expander summary::before {
+		content: "▸ ";
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+
+	.seo-expander[open] summary::before {
+		transform: rotate(90deg);
+	}
+
+	.seo-expander summary:hover,
+	.seo-expander summary:focus-visible {
+		color: var(--primary-light);
+		outline: none;
+	}
+
+	.seo-expander[open] summary {
+		margin-bottom: 1rem;
+	}
+
+	.seo-expander ol {
+		margin: 0;
+		padding-left: 1.25rem;
+	}
+
+	.seo-conversion-list {
+		margin: 0;
+		padding-left: 0;
+		list-style: none;
+	}
+
+	.seo-conversion-list li {
+		margin-bottom: 0.5rem;
+		padding-left: 0;
+	}
+
+	.seo-faq {
+		margin-top: 0;
+	}
+
+	.seo-faq-item {
+		margin-bottom: 1.25rem;
+	}
+
+	.seo-faq-item h3 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0 0 0.35rem;
+		color: rgb(255 255 255 / 0.78);
+	}
+
+	.seo-faq-item p {
+		margin: 0;
+	}
+
+	.seo-tool-list {
+		margin: 0;
+		padding-left: 1.25rem;
+	}
+</style>
