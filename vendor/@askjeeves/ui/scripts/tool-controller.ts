@@ -107,9 +107,9 @@ export function initToolController(
 		selectedConversion = null;
 	}
 
-	function reportError(err: unknown, fallback: string) {
+	function showError(message: string) {
 		hideProgress();
-		setStatus(statusEl, getErrorMessage(err, fallback), true);
+		setStatus(statusEl, message, true);
 	}
 
 	function hideProgress() {
@@ -276,11 +276,11 @@ export function initToolController(
 			showConvertPanel();
 			renderMethods();
 			updateConvertButton();
-		} catch (err) {
+		} catch {
 			files = [];
 			fileNameEl.textContent = "";
 			hideConvertPanel();
-			reportError(err, "Could not read that file. Try again.");
+			showError("Could not read that file. Try again.");
 			updateConvertButton();
 		} finally {
 			fileInput.value = "";
@@ -415,15 +415,17 @@ export function initToolController(
 	});
 
 	const onGlobalFailure = (reason: unknown) => {
+		const chunk = isChunkLoadFailure(reason);
+		if (!isConverting && !chunk) return;
+
 		if (isConverting) {
 			isConverting = false;
 			abortController = null;
 			updateConvertButton();
 		}
-		const message = isChunkLoadFailure(reason)
-			? CHUNK_LOAD_HINT
-			: getErrorMessage(reason, "Something went wrong. Try again.");
-		reportError(reason, message);
+		showError(
+			conversionFailureMessage(reason) || "Something went wrong. Try again.",
+		);
 	};
 
 	window.addEventListener("unhandledrejection", (event) => {

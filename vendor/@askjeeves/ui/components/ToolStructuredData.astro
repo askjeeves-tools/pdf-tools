@@ -1,0 +1,76 @@
+---
+import { name, organizationUrl } from "ask-jeeves:globals";
+
+interface Props {
+	title: string;
+	description: string;
+	canonicalURL: URL;
+	featureList?: string[];
+	graph?: Record<string, unknown>[];
+	keywords?: string[];
+	isAccessibleForFree?: boolean;
+	applicationSubCategory?: string;
+	extraGraph?: Record<string, unknown>[];
+}
+
+const {
+	title,
+	description,
+	canonicalURL,
+	featureList = [],
+	graph,
+	keywords,
+	isAccessibleForFree,
+	applicationSubCategory,
+	extraGraph = [],
+} = Astro.props;
+
+const siteOrigin = canonicalURL.origin;
+
+const webApplication: Record<string, unknown> = {
+	"@id": `${siteOrigin}/#app`,
+	"@type": "WebApplication",
+	name: title,
+	description,
+	url: canonicalURL.href,
+	applicationCategory: "UtilityApplication",
+	operatingSystem: "Any",
+	browserRequirements: "Requires JavaScript. Requires HTML5.",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+	},
+};
+
+if (featureList.length > 0) {
+	webApplication.featureList = featureList;
+}
+if (isAccessibleForFree) {
+	webApplication.isAccessibleForFree = true;
+}
+if (applicationSubCategory) {
+	webApplication.applicationSubCategory = applicationSubCategory;
+}
+if (keywords && keywords.length > 0) {
+	webApplication.keywords = keywords.join(", ");
+}
+
+const defaultGraph: Record<string, unknown>[] = [
+	webApplication,
+	{
+		"@id": `${siteOrigin}/#organization`,
+		"@type": "Organization",
+		name,
+		url: organizationUrl,
+	},
+	...extraGraph,
+];
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@graph": graph ?? defaultGraph,
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

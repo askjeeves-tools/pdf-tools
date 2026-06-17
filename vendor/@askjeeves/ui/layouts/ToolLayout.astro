@@ -6,17 +6,62 @@ import ToolHead from "../components/ToolHead.astro";
 interface Props {
 	title: string;
 	description?: string;
+	featureList?: string[];
+	documentTitle?: string;
+	ogImageAlt?: string;
+	ogImageWidth?: number;
+	ogImageHeight?: number;
+	ogLocale?: string;
+	structuredDataGraph?: Record<string, unknown>[];
+	keywords?: string[];
+	isAccessibleForFree?: boolean;
+	applicationSubCategory?: string;
+	extraStructuredDataGraph?: Record<string, unknown>[];
 }
 
-const { title, description } = Astro.props;
+const {
+	title,
+	description,
+	featureList,
+	documentTitle,
+	ogImageAlt,
+	ogImageWidth,
+	ogImageHeight,
+	ogLocale,
+	structuredDataGraph,
+	keywords,
+	isAccessibleForFree,
+	applicationSubCategory,
+	extraStructuredDataGraph,
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<ToolHead title={title} description={description} />
+		<ToolHead
+			title={title}
+			description={description}
+			featureList={featureList}
+			documentTitle={documentTitle}
+			ogImageAlt={ogImageAlt}
+			ogImageWidth={ogImageWidth}
+			ogImageHeight={ogImageHeight}
+			ogLocale={ogLocale}
+			structuredDataGraph={structuredDataGraph}
+			keywords={keywords}
+			isAccessibleForFree={isAccessibleForFree}
+			applicationSubCategory={applicationSubCategory}
+			extraStructuredDataGraph={extraStructuredDataGraph}
+		/>
 	</head>
 	<body>
+		<noscript>
+			<p class="noscript-notice">
+				This tool requires JavaScript to convert files in your browser. Visit
+				<a href="https://askjeeves.cc">askjeeves.cc</a> for other tools.
+			</p>
+		</noscript>
 		<main>
 			<slot />
 			<ToolFooter projectName={title} />

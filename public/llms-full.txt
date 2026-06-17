@@ -1,0 +1,69 @@
+# Free Secure PDF Converter — Ask Jeeves
+
+> Free, secure PDF converter. Merge, split, compress, and export PDF pages to PNG, JPEG, or WebP in your browser. Extract or remove pages—files never leave your device.
+
+## Tool
+
+- [Free Secure PDF Converter](https://pdf.askjeeves.cc/): Merge, split, compress PDFs; export pages to PNG, JPEG, or WebP; extract or remove pages
+
+## Supported conversions
+
+- Extract page range → PDF
+- Split all pages → ZIP of PDFs
+- Pages → PNG (ZIP if multiple)
+- PDF → JPEG(s)
+- PDF → WebP(s)
+- Remove pages from PDF
+- Compress PDF
+- Merge PDF
+
+## FAQ
+
+- Is this PDF converter free? Yes. Every conversion is free with no account, watermark, or usage limit.
+- Is this PDF converter secure? Yes. Files are processed locally in your browser. Nothing is uploaded to a server, so your documents stay on your device.
+- What can I do with my PDF files? You can merge multiple PDFs, split pages into separate files, compress PDFs, export pages to PNG, JPEG, or WebP, extract a page range, or remove unwanted pages.
+- Can I merge multiple PDF files? Yes. Choose Merge PDF, upload two or more PDF files, and download a single combined document.
+- Does the converter work on mobile? Yes. It runs in modern mobile browsers that support HTML5 and JavaScript. Very large files may be slower on mobile devices.
+- What is the maximum file size? Each file can be up to about 50 MB. If a file is too large, you will see a clear error message asking you to use a smaller file.
+- Is there a page limit? Each PDF job can process up to 50 pages. If your document has more pages, split it into smaller files first.
+- Why did my conversion fail? Common causes are a non-PDF file, corrupted PDF data, exceeding the size or page limit, or choosing merge with only one file. Check the message below the converter for specific guidance, then try again or refresh the page.
+
+## Extended context
+
+- [Full site context](https://pdf.askjeeves.cc/llms-full.txt): how-it-works, security, and per-conversion details
+
+## More tools
+
+- [Ask Jeeves](https://askjeeves.cc): Free file conversion tools (PDF, images, CSV/JSON/Excel, Word)
+
+## How it works
+
+1. Upload one or more PDF files using the drop zone or file picker.
+2. Choose an operation (merge, split, compress, export to images, extract or remove pages).
+3. Click Convert, then download your result. Nothing is uploaded to a server.
+
+## Secure and private
+
+Your files are processed locally in your browser. Nothing is stored on a server and nothing is uploaded over the network. That makes this tool a good fit for contracts, financial documents, and other sensitive PDFs you do not want to send to a third-party service.
+
+## Conversion details
+
+- **Extract page range → PDF** — Extract a page range from a PDF and download a new PDF with only those pages.
+- **Split all pages → ZIP of PDFs** — Split every page into its own PDF file and download them as a ZIP archive.
+- **Pages → PNG (ZIP if multiple)** — Export PDF pages as PNG images. Multiple pages are packaged in a ZIP file.
+- **PDF → JPEG(s)** — Convert PDF pages to JPEG images with quality control.
+- **PDF → WebP(s)** — Convert PDF pages to WebP images for smaller file sizes.
+- **Remove pages from PDF** — Remove selected pages from a PDF and download the updated document.
+- **Compress PDF** — Reduce PDF file size while keeping the document readable.
+- **Merge PDF** — Combine multiple PDF files into a single document in upload order.
+
+## Keywords
+
+pdf converter, free pdf converter, secure pdf converter, merge pdf, split pdf, compress pdf, pdf to png, pdf to jpeg, pdf to webp, extract pdf pages, browser pdf converter
+
+## Site metadata
+
+- Canonical URL: https://pdf.askjeeves.cc/
+- Site name: Free Secure PDF Converter — Ask Jeeves
+- Sitemap: https://pdf.askjeeves.cc/sitemap-index.xml
+- Organization: [Ask Jeeves](https://askjeeves.cc)

@@ -1,19 +1,111 @@
 ---
-import { name, tagline, themeColor } from "ask-jeeves:globals";
-import favicon from "../assets/favicon-32x32.png";
+import {
+	name,
+	openGraph,
+	tagline,
+	themeColor,
+	twitterHandle,
+} from "ask-jeeves:globals";
+import ToolStructuredData from "./ToolStructuredData.astro";
 
 interface Props {
 	title: string;
 	description?: string;
+	featureList?: string[];
+	documentTitle?: string;
+	ogImageAlt?: string;
+	ogImageWidth?: number;
+	ogImageHeight?: number;
+	ogLocale?: string;
+	structuredDataGraph?: Record<string, unknown>[];
+	keywords?: string[];
+	isAccessibleForFree?: boolean;
+	applicationSubCategory?: string;
+	extraStructuredDataGraph?: Record<string, unknown>[];
 }
 
-const { title, description = tagline } = Astro.props;
-const pageTitle = `${title} | ${name}`;
+const {
+	title,
+	description = tagline,
+	featureList,
+	documentTitle,
+	ogImageAlt,
+	ogImageWidth,
+	ogImageHeight,
+	ogLocale,
+	structuredDataGraph,
+	keywords,
+	isAccessibleForFree,
+	applicationSubCategory,
+	extraStructuredDataGraph,
+} = Astro.props;
+
+if (!Astro.site) {
+	throw new Error("[ToolHead] Astro.site must be set in astro.config.ts for SEO tags.");
+}
+
+const pageTitle = documentTitle ?? `${title} | ${name}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogTitle = openGraph.home.title;
+const ogDescription = openGraph.home.description ?? description;
+const ogImage =
+	openGraph.home.image ?? new URL("/og.png", Astro.site).href;
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
 <meta name="theme-color" content={themeColor} />
-<link rel="icon" type="image/png" sizes="32x32" href={favicon.src} />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link
+	rel="alternate"
+	type="text/plain"
+	href="/llms.txt"
+	title="LLM site summary"
+/>
+<link
+	rel="alternate"
+	type="text/plain"
+	href="/llms-full.txt"
+	title="LLM full site context"
+/>
+<link rel="canonical" href={canonicalURL} />
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={ogDescription} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={name} />
+<meta property="og:image" content={ogImage} />
+{
+	ogImageWidth != null && (
+		<meta property="og:image:width" content={String(ogImageWidth)} />
+	)
+}
+{
+	ogImageHeight != null && (
+		<meta property="og:image:height" content={String(ogImageHeight)} />
+	)
+}
+{ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+{ogLocale && <meta property="og:locale" content={ogLocale} />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={ogDescription} />
+<meta name="twitter:image" content={ogImage} />
+{twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
+{twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
+<ToolStructuredData
+	title={title}
+	description={description}
+	canonicalURL={canonicalURL}
+	featureList={featureList}
+	graph={structuredDataGraph}
+	keywords={keywords}
+	isAccessibleForFree={isAccessibleForFree}
+	applicationSubCategory={applicationSubCategory}
+	extraGraph={extraStructuredDataGraph}
+/>
